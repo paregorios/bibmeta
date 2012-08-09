@@ -28,10 +28,8 @@ Lang = attribute xml:lang {
     
 DCDefault = Lang?, string 
 
-Record = element nc:NYUCoreRecord { 
-    attribute xml:id { xsd:ID },                            # identifier for this metadata record
-    Lang,                                                   # must indicate language of the record itself (not the work)
-   element bibo:Document {                                 # use bibo:Document, with values corresponding to more specific bibo classes 
+BiboDocument = element bibo:Document {
+                                    # use bibo:Document, with values corresponding to more specific bibo classes 
             string "academic article"                              # I've left out specifically legal types
             | string "article"                                      # I've also left out some superclasses
             | string "audio document"
@@ -69,7 +67,12 @@ Record = element nc:NYUCoreRecord {
             | string "thesis, phd"
             | string "webpage"
             | string "website" 
-    },
+}
+
+Record = element nc:NYUCoreRecord { 
+    attribute xml:id { xsd:ID },                            # identifier for this metadata record
+    Lang,                                                   # must indicate language of the record itself (not the work)
+    BiboDocument+,
     element bibo:identifier {                               # use bibo:identifier, with the type values corresponding to more specific bibo identifier types
         attribute type { 
             string "asin" 
